@@ -64,7 +64,11 @@ class SheetClient {
         }
 
         // Return the data
-        return data_value;
+        if (data.error) {
+          throw new Error(data.error);
+        } else {
+          return data_value;
+        }
       })
       .catch((error) => {
         throw new Error(error);
@@ -148,6 +152,84 @@ class SheetClient {
           throw new Error(data.error);
         } else {
           return data;
+        }
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  }
+
+  // Read Data
+  async readData() {
+    // Get the current time
+    const Time = Date.now();
+    // Check user has provided a connection string
+    this.checkConnectionString();
+
+    // Make a request to the API
+    return fetch(`${api_endpoint}/${this.options.connect}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (this.useLogger()) {
+          // Log the data
+          console.log("Read Data: ", data);
+          console.log("Time: ", Date.now() - Time, "ms");
+        }
+
+        // Return the data
+        if (data.error) {
+          throw new Error(data.error);
+        } else {
+          return data;
+        }
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  }
+
+  // Read Data By ID
+  async readDataById(data_id) {
+    // Get the current time
+    const Time = Date.now();
+    // Check user has provided a connection string
+    this.checkConnectionString();
+
+    // Make a request to the API
+    return fetch(
+      `${api_endpoint}/${this.options.connect}/search?id=${data_id}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (this.useLogger()) {
+          // Log the data
+          console.log("Read Data: ", data);
+          console.log("Time: ", Date.now() - Time, "ms");
+        }
+
+        // Return the data
+        if (data.error) {
+          throw new Error(data.error);
+        } else {
+          // If the response is an emty array return null
+          if (data.length === 0) {
+            throw new Error("No results found");
+          } else {
+            return data[0];
+          }
         }
       })
       .catch((error) => {
