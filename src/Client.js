@@ -102,7 +102,7 @@ class SheetClient {
         if (data.error) {
           throw new Error(data.error);
         } else {
-          return data;
+          return { id: data_id };
         }
       })
       .catch((error) => {
@@ -151,7 +151,7 @@ class SheetClient {
         if (data.error) {
           throw new Error(data.error);
         } else {
-          return data;
+          return data_value;
         }
       })
       .catch((error) => {
