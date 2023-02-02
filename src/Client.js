@@ -14,12 +14,76 @@ class SheetClient {
     }
   }
 
-  // Use Logger
-  useLogger() {
-    if (this.options.useLogger) {
-      return true;
+  // Events handler
+  on(event, callback) {
+    // Check if the event is a string
+    if (typeof event !== "string") {
+      throw new Error("Event must be a string");
+    } else if (!this.options.connect) {
+      throw new Error("No connection string provided");
     } else {
-      return false;
+      if (event === "connect") {
+        // Check user has provided a connection string
+        if (this.options.connect) {
+          // Run the callback
+          let connectionString = `${api_endpoint}/${this.options.connect}`;
+          callback(connectionString);
+        } else {
+          throw new Error("No connection string provided");
+        }
+      } else if (event === "dataCreate") {
+        // When the createData method is called
+        // Check when a function is called
+        const original = this.createData;
+        this.createData = function () {
+          // Run the callback
+          callback();
+          // Run the original function
+          return original.apply(this, arguments);
+        };
+      } else if (event === "dataDelete") {
+        // When the deleteData method is called
+        // Check when a function is called
+        const original = this.deleteData;
+        this.deleteData = function () {
+          // Run the callback
+          callback();
+          // Run the original function
+          return original.apply(this, arguments);
+        };
+      } else if (event === "dataUpdate") {
+        // When the updateData method is called
+        // Check when a function is called
+        const original = this.updateData;
+        this.updateData = function () {
+          // Run the callback
+          callback();
+          // Run the original function
+          return original.apply(this, arguments);
+        };
+      } else if (event === "dataRead") {
+        // When the updateData method is called
+        // Check when a function is called
+        const original = this.readData;
+        this.readData = function () {
+          // Run the callback
+          callback();
+          // Run the original function
+          return original.apply(this, arguments);
+        };
+      } else if (event === "dataReadById") {
+        // When the readDataById method is called
+        // Check when a function is called
+        const original = this.readDataById;
+        this.readDataById = function () {
+          // Run the callback
+          callback();
+          // Run the original function
+          return original.apply(this, arguments);
+        };
+      } else {
+        throw new Error("Invalid event flag provided");
+      }
     }
   }
 
@@ -57,12 +121,6 @@ class SheetClient {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (this.useLogger()) {
-          // Log the data
-          console.log("Created Data: ", data_value);
-          console.log("Time: ", Date.now() - Time, "ms");
-        }
-
         // Return the data
         if (data.error) {
           throw new Error(data.error);
@@ -92,12 +150,6 @@ class SheetClient {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (this.useLogger()) {
-          // Log the data
-          console.log("Deleted ID: ", data_id);
-          console.log("Time: ", Date.now() - Time, "ms");
-        }
-
         // Return the data
         if (data.error) {
           throw new Error(data.error);
@@ -142,12 +194,6 @@ class SheetClient {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (this.useLogger()) {
-          // Log the data
-          console.log("Updated Data: ", data_value);
-          console.log("Time: ", Date.now() - Time, "ms");
-        }
-
         if (data.error) {
           throw new Error(data.error);
         } else {
@@ -176,12 +222,6 @@ class SheetClient {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (this.useLogger()) {
-          // Log the data
-          console.log("Read Data: ", data);
-          console.log("Time: ", Date.now() - Time, "ms");
-        }
-
         // Return the data
         if (data.error) {
           throw new Error(data.error);
@@ -214,12 +254,6 @@ class SheetClient {
     )
       .then((response) => response.json())
       .then((data) => {
-        if (this.useLogger()) {
-          // Log the data
-          console.log("Read Data: ", data);
-          console.log("Time: ", Date.now() - Time, "ms");
-        }
-
         // Return the data
         if (data.error) {
           throw new Error(data.error);
