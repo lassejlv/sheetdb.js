@@ -1,6 +1,13 @@
 // The main class for the library
 const fetch = require("node-fetch");
 const { api_endpoint } = require("./Config");
+const {
+  readData,
+  readDataById,
+  createData,
+  deleteData,
+  updateData,
+} = require("./functions/export");
 
 class SheetClient {
   constructor(options) {
@@ -90,47 +97,11 @@ class SheetClient {
   // Create Data
   async createData(data_value) {
     // Get the current time
-    const Time = Date.now();
+
     // Check user has provided a connection string
     this.checkConnectionString();
 
-    // Check if the data is an array
-    if (!Array.isArray(data_value)) {
-      throw new Error("Data must be an array");
-    }
-
-    // If array must contian an id property
-    if (!data_value[0].id) {
-      throw new Error("Data must contain an id property");
-    } else if (data_value[0].id !== "INCREMENT") {
-      throw new Error(
-        "Data must contain an id property with the value INCREMENT"
-      );
-    }
-
-    // Make a request to the API
-    return fetch(`${api_endpoint}/${this.options.connect}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data: data_value,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Return the data
-        if (data.error) {
-          throw new Error(data.error);
-        } else {
-          return data_value;
-        }
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
+    return createData(data_value, this.options.connect);
   }
 
   // Delete Data
@@ -140,135 +111,32 @@ class SheetClient {
     // Check user has provided a connection string
     this.checkConnectionString();
 
-    // Make a request to the API
-    return fetch(`${api_endpoint}/${this.options.connect}/id/${data_id}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Return the data
-        if (data.error) {
-          throw new Error(data.error);
-        } else {
-          return { id: data_id };
-        }
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
+    return deleteData(data_id, this.options.connect);
   }
 
   // Update Data
   async updateData(data_id, data_value) {
-    // Get the current time
-    const Time = Date.now();
     // Check user has provided a connection string
     this.checkConnectionString();
 
-    // Check if the data is an array
-    if (Array.isArray(data_value)) {
-      throw new Error("Data must be an object");
-    }
-
-    // If array must contian an id property
-    if (data_id[0].id) {
-      throw new Error(
-        "You can't update the id property inside a update request"
-      );
-    }
-
-    // Make a request to the API
-    return fetch(`${api_endpoint}/${this.options.connect}/id/${data_id}`, {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data: [data_value],
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          throw new Error(data.error);
-        } else {
-          return data_value;
-        }
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
+    return updateData(data_id, data_value, this.options.connect);
   }
 
   // Read Data
   async readData() {
-    // Get the current time
-    const Time = Date.now();
     // Check user has provided a connection string
     this.checkConnectionString();
 
-    // Make a request to the API
-    return fetch(`${api_endpoint}/${this.options.connect}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Return the data
-        if (data.error) {
-          throw new Error(data.error);
-        } else {
-          return data;
-        }
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
+    // Run the function
+    return readData(this.options.connect);
   }
 
   // Read Data By ID
   async readDataById(data_id) {
-    // Get the current time
-    const Time = Date.now();
     // Check user has provided a connection string
     this.checkConnectionString();
 
-    // Make a request to the API
-    return fetch(
-      `${api_endpoint}/${this.options.connect}/search?id=${data_id}`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        // Return the data
-        if (data.error) {
-          throw new Error(data.error);
-        } else {
-          // If the response is an emty array return null
-          if (data.length === 0) {
-            throw new Error("No results found");
-          } else {
-            return data[0];
-          }
-        }
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
+    return readDataById(data_id, this.options.connect);
   }
 }
 
