@@ -26,7 +26,7 @@ const sheetDbClient = new SheetClient({
 });
 ```
 
-To get your app id, go to [SheetDB]("https://sheetdb.io/") and create a new app. And then copy the app id from the settings.
+To get your app id, go to [SheetDB](https://sheetdb.io/) and create a new app. And then copy the app id from the settings.
 
 #### Lets create some data...
 
