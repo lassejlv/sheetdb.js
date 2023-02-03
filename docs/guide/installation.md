@@ -26,7 +26,7 @@ const sheetDbClient = new SheetClient({
 });
 ```
 
-To get your app id, go to [SheetDB]("https://sheetdb.io/") and create a new app. And then copy the app id from the settings.
+To get your app id, go to [SheetDB](https://sheetdb.io/) and create a new app. And then copy the app id from the settings.
 
 #### Lets create some data...
 
@@ -47,4 +47,4 @@ user.then((db) => console.log(db)).catch((err) => console.log(err));
 
 Inside the `createData` method you can pass an array of objects. Each object will be a row in the database. You must put in an array otherwise you will get an error.
 
-Read about how to delete data [here]("/guide/delete.md").
+Read about how to delete data [here](/guide/delete.md).
