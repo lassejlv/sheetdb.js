@@ -9,22 +9,22 @@ Go to [sheetdb-js.vercel.app](https://sheetdb-js.vercel.app) to get started.
 # Basic Usage
 
 ```js
+// Import the libary
 const { SheetClient } = require("@themrdev/sheetdb.js");
+
+// Setup Client
 
 const sheetDbClient = new SheetClient({
   // The app id from the: https://sheetdb.io/api/v1/<app_id>
   connect: "<app_id>",
 });
-```
-```js
-const schema = {
-  id: "INCREMENT",
-  name: "John Doe",
-  age: 20,
-};
 
-const user = sheetDbClient.createData([schema]);
+// On Connect
 
-// Getting the data
-user.then((db) => console.log(db)).catch((err) => console.log(err));
+sheetDbClient.on("connect", (connectionString) => {
+  console.log(
+    "Connected to the database! Connection String: " + connectionString
+  );
+});
+
 ```
