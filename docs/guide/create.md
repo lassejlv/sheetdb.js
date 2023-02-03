@@ -1,10 +1,9 @@
 # Create Data
 
-In here we will create basic schema. With an name and age for a user. YOU must have the `id` property in your schema and have it set to `INCREMENT`. Otherwise you will get an error.
+In here we will create basic schema. With an name and age for a user. YOU not have am id property because it will be created automatically.
 
 ```js
 const schema = {
-  id: "INCREMENT",
   name: "John Doe",
   age: 20,
 };
