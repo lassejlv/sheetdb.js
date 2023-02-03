@@ -1,5 +1,6 @@
 const { api_endpoint } = require("../Config");
 const fetch = require("node-fetch");
+const { createSnowflakeId } = require("../CreateSnowflakeId");
 
 async function createData(data_value, connectionString) {
   // Check if the data is an array
@@ -8,13 +9,17 @@ async function createData(data_value, connectionString) {
   }
 
   // If array must contian an id property
-  if (!data_value[0].id) {
-    throw new Error("Data must contain an id property");
-  } else if (data_value[0].id !== "INCREMENT") {
-    throw new Error(
-      "Data must contain an id property with the value INCREMENT"
-    );
-  }
+  // get the data an add the id
+  data_value = data_value.map((data) => {
+    if (data.id) {
+      throw new Error("Data must not contain an id property");
+    } else {
+      return {
+        ...data,
+        id: createSnowflakeId(),
+      };
+    }
+  });
 
   // Make a request to the API
   return fetch(`${api_endpoint}/${connectionString}`, {

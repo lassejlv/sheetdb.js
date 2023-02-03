@@ -1,6 +1,6 @@
 {
   "name": "@themrdev/sheetdb.js",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "A simple Node.js module for interacting with the SheetDB API",
   "type": "commonjs",
   "homepage": "https://sheetdb-js.vercel.app",
@@ -18,7 +18,9 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "4.1.2",
-    "node-fetch": "2"
+    "crypto": "^1.0.1",
+    "node-fetch": "2",
+    "snowflake-id": "^1.1.0"
   },
   "devDependencies": {
     "prompt-sync": "^4.2.0"
