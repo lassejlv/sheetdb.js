@@ -1,4 +1,5 @@
 const { api_endpoint } = require("../Config");
+const fetch = require("node-fetch");
 
 async function updateData(data_id, data_value, connectionString) {
   // Check if the data is an array

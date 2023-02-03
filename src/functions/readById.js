@@ -1,4 +1,5 @@
 const { api_endpoint } = require("../Config");
+const fetch = require("node-fetch");
 
 async function readDataById(data_id, connectionString) {
   // Make a request to the API
