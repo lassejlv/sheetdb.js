@@ -1,10 +1,10 @@
 // The main class for the library
-const fetch = require("node-fetch");
 const { api_endpoint } = require("./Config");
 const {
   readData,
   readDataById,
   createData,
+  deleteDataById,
   deleteData,
   updateData,
 } = require("./functions/export");
@@ -96,22 +96,26 @@ class SheetClient {
 
   // Create Data
   async createData(data_value) {
-    // Get the current time
-
     // Check user has provided a connection string
     this.checkConnectionString();
 
     return createData(data_value, this.options.connect);
   }
 
-  // Delete Data
-  async deleteData(data_id) {
-    // Get the current time
-    const Time = Date.now();
+  // Delete Data By ID
+  async deleteDataById(data_id) {
     // Check user has provided a connection string
     this.checkConnectionString();
 
-    return deleteData(data_id, this.options.connect);
+    return deleteDataById(data_id, this.options.connect);
+  }
+
+  async deleteData() {
+    // Check user has provided a connection string
+    this.checkConnectionString();
+
+    // Run the function
+    return deleteData(this.options.connect);
   }
 
   // Update Data

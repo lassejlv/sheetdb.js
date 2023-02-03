@@ -38,9 +38,7 @@ sheetDbClient.on("dataReadById", () => {
 
 // Create Data
 // setTimeout(() => {
-sheetDbClient
-  .createData([{ name: "lasse" }, { name: "lasse2" }])
-  .then((data) => {
-    console.log(data);
-  });
+sheetDbClient.deleteData().then((data) => {
+  console.log(data);
+});
 // }, 5000);

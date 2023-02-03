@@ -1,4 +1,4 @@
-# Sheetdb.js <small>v2.0.0</small>
+# Sheetdb.js <small>v2.0.1</small>
 
 > A simple Node.js module for interacting with the SheetDB API.
 
