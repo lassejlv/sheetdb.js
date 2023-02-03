@@ -30,7 +30,9 @@ To get your app id, go to [SheetDB](https://sheetdb.io/) and create a new app. A
 
 #### Lets create some data...
 
-In here we will create basic schema. With an name and age for a user. YOU not have am id property because it will be created automatically.
+In here we will create basic schema. With an name and age for a user. YOU can't use the `id` property in the schema. It will be automatically generated.
+
+The `id` that will be generated will be a random string with the current year at the two first characters. For example: `23ee56732fa4`. You can se the `23` at the two first characters. This is the year. The rest of the characters are random.
 
 ```js
 const schema = {
