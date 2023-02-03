@@ -3,7 +3,6 @@ const { SheetClient } = require("../index");
 const sheetDbClient = new SheetClient({
   // Enter ConnectionString APP_ID
   connect: "jy2jkcod1f3rz",
-  useLogger: false,
 });
 
 // onConnect
@@ -38,7 +37,8 @@ sheetDbClient.on("dataReadById", () => {
 
 // Create Data
 // setTimeout(() => {
-sheetDbClient.deleteData().then((data) => {
+// sheetDbClient.createData([{ name: "lasse", age: 17 }]);
+sheetDbClient.updateData("23bfc917d50b", { name: "lasse2" }).then((data) => {
   console.log(data);
 });
 // }, 5000);

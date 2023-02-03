@@ -127,12 +127,12 @@ class SheetClient {
   }
 
   // Read Data
-  async readData() {
+  async readData(data_limit) {
     // Check user has provided a connection string
     this.checkConnectionString();
 
     // Run the function
-    return readData(this.options.connect);
+    return readData(data_limit, this.options.connect);
   }
 
   // Read Data By ID
