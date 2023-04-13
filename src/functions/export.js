@@ -5,6 +5,7 @@ const { createData } = require("./create");
 const { deleteDataById } = require("./deleteById");
 const { deleteData } = require("./delete");
 const { updateData } = require("./update");
+const { searchData } = require("./search");
 
 module.exports = {
   readData,
@@ -13,4 +14,5 @@ module.exports = {
   deleteDataById,
   deleteData,
   updateData,
+  searchData,
 };

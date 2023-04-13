@@ -37,8 +37,18 @@ sheetDbClient.on("dataReadById", () => {
 
 // Create Data
 // setTimeout(() => {
-// sheetDbClient.createData([{ name: "lasse", age: 17 }]);
-sheetDbClient.updateData("23bfc917d50b", { name: "lasse2" }).then((data) => {
-  console.log(data);
-});
+sheetDbClient.createData([{ name: "lasse", age: 17 }]);
+// sheetDbClient.searchData({
+//   query: "name",
+//   value: "lasse",
+// });
+
+(async () => {
+  const findLasse = await sheetDbClient.searchData({
+    query: "name",
+    value: "lasseø",
+  });
+
+  console.log(findLasse);
+})();
 // }, 5000);

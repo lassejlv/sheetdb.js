@@ -7,6 +7,7 @@ const {
   deleteDataById,
   deleteData,
   updateData,
+  searchData,
 } = require("./functions/export");
 
 class SheetClient {
@@ -141,6 +142,15 @@ class SheetClient {
     this.checkConnectionString();
 
     return readDataById(data_id, this.options.connect);
+  }
+
+  // Search Data
+  async searchData(data_value) {
+    // Check user has provided a connection string
+    this.checkConnectionString();
+
+    // Run the function
+    return searchData(data_value, this.options.connect);
   }
 }
 
