@@ -100,7 +100,12 @@ class SheetClient {
     // Check user has provided a connection string
     this.checkConnectionString();
 
-    return createData(data_value, this.options.connect);
+    return createData(
+      data_value,
+      this.options.connect,
+      this.options.bearerToken,
+      this.options.basicAuth
+    );
   }
 
   // Delete Data By ID

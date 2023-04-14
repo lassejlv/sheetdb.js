@@ -2,7 +2,12 @@ const { api_endpoint } = require("../Config");
 const fetch = require("node-fetch");
 const { createSnowflakeId } = require("../CreateSnowflakeId");
 
-async function createData(data_value, connectionString) {
+async function createData(
+  data_value,
+  connectionString,
+  bearer_token,
+  basic_auth
+) {
   // Check if the data is an array
   if (!Array.isArray(data_value)) {
     throw new Error("Data must be an array");
@@ -21,12 +26,24 @@ async function createData(data_value, connectionString) {
     }
   });
 
+  console.log(basic_auth);
+
   // Make a request to the API
   return fetch(`${api_endpoint}/${connectionString}`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+
+      // Add bearer token if the user has provided one
+      ...(bearer_token && { Authorization: `Bearer ${bearer_token}` }),
+      ...(basic_auth && {
+        Authorization: `Basic ${Buffer.from(
+          `${basic_auth.username}:${basic_auth.password}`
+        ).toString("base64")}`,
+      }),
+
+      // Add basic auth if the user has provided one
     },
     body: JSON.stringify({
       data: data_value,
